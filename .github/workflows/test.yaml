@@ -19,6 +19,8 @@ env:
 
 run-name: ACME Release, version ${{ inputs.version || github.ref_name }}
 
+permissions: {}
+
 jobs:
 
   build:
@@ -29,15 +31,15 @@ jobs:
         id: cache1
         with:
           path: DIST
-          key: CI-cache1.r0.#${{ github.run_number}.attempt#${{ github.run_attempt }}
+          key: CI-cache1.r1.#${{ github.run_number }}.attempt#${{ github.run_attempt }}
           # key seems unnecessarily specific? that's to keep track of what's happening.
           #
           # in practice, the key changes in response to project-source-level events,
           # (like upgrades in compiler, or movement in the dependency forest),
           # causing cache invalidation & rebuild at the expected granularity.
           restore-keys: |
-            CI-cache1.r0.#${{ github.run_number}.
-            CI-cache1.r0.
+            CI-cache1.r1.#${{ github.run_number }}.
+            CI-cache1.r1.
 
       - name: Simulated rebuild of artifact on cold cache
         if: steps.cache1.outputs.cache-hit != 'true'
@@ -53,5 +55,5 @@ jobs:
           EOF
           sleep 5
 
-      - name: Simulated final step: inspect cached artifact
+      - name: "Simulated final step: inspect cached artifact"
         run: cat DIST/artifact.txt
