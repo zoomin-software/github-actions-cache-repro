@@ -19,6 +19,8 @@ env:
 
 run-name: ACME Release, version ${{ inputs.version || github.ref_name }}
 
+permissions: {}
+
 jobs:
 
   build:
@@ -29,7 +31,7 @@ jobs:
         id: cache1
         with:
           path: DIST
-          key: CI-cache1.r0.#${{ github.run_number}.attempt#${{ github.run_attempt }}
+          key: CI-cache1.r0.#${{ github.run_number }}.attempt#${{ github.run_attempt }}
           # key seems unnecessarily specific? that's to keep track of what's happening.
           #
           # in practice, the key changes in response to project-source-level events,
@@ -53,5 +55,5 @@ jobs:
           EOF
           sleep 5
 
-      - name: Simulated final step: inspect cached artifact
+      - name: "Simulated final step: inspect cached artifact"
         run: cat DIST/artifact.txt
