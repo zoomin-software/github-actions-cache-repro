@@ -38,7 +38,7 @@ jobs:
           # (like upgrades in compiler, or movement in the dependency forest),
           # causing cache invalidation & rebuild at the expected granularity.
           restore-keys: |
-            CI-cache1.r0.#${{ github.run_number}.
+            CI-cache1.r0.#${{ github.run_number }}.
             CI-cache1.r0.
 
       - name: Simulated rebuild of artifact on cold cache
